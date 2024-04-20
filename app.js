@@ -15,12 +15,17 @@ const setXFrameOptions = (req, res, next) => {
   res.set("x-frame-options", "deny");
   next();
 };
+const setContentSecurityPolicy = (req, res, next) => {
+  res.set("content-security-policy", "default-src 'none'");
+  next();
+};
 
 
 // Use the CORS module
 app.use(cors());
 app.use(setXContentTypeOptions);
 app.use(setXFrameOptions);
+app.use(setContentSecurityPolicy);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use("/api/institutions", institutionRoutes);
