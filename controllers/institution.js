@@ -101,9 +101,36 @@ const createInstitution = async (req, res) => {
     }
   };
 
+  const deleteInstitution = async (req, res) => {
+    try {
+      const institution = await prisma.institution.findUnique({
+        where: { id: Number(req.params.id) },
+      });
+  
+      if (!institution) {
+        return res
+          .status(404)
+          .json({ msg: `No institution with the id: ${req.params.id} found` });
+      }
+  
+      await prisma.institution.delete({
+        where: { id: Number(req.params.id) },
+      });
+  
+      return res.json({
+        msg: `Institution with the id: ${req.params.id} successfully deleted`,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
+
   export {
     createInstitution,
     getInstitutions,
     getInstitution,
     updateInstitution,
+    deleteInstitution,
   };
