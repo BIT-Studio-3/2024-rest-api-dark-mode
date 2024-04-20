@@ -28,6 +28,23 @@ const createInstitution = async (req, res) => {
     }
   };
 
+  const getInstitutions = async (req, res) => {
+    try {
+      const institutions = await prisma.institution.findMany();
+  
+      if (institutions.length === 0) {
+        return res.status(404).json({ msg: "No institutions found" });
+      }
+  
+      return res.json({ data: institutions });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
+
   export {
     createInstitution,
+    getInstitutions,
   };
