@@ -7,9 +7,14 @@ import cors from 'cors';
 
 // Create an Express application
 const app = express();
+const setXContentTypeOptions = (req, res, next) => {
+  res.set("x-content-type-options", "nosniff");
+  next();
+};
 
 // Use the CORS module
 app.use(cors());
+app.use(setXContentTypeOptions);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use("/api/institutions", institutionRoutes);
