@@ -66,8 +66,44 @@ const createInstitution = async (req, res) => {
     }
   };
 
+  const updateInstitution = async (req, res) => {
+    try {
+      const contentType = req.headers["content-type"];
+      if (!contentType || contentType !== "application/json") {
+        return res.status(400).json({
+          msg: "Invalid Content-Type. Expected application/json.",
+        });
+      }
+  
+      let institution = await prisma.institution.findUnique({
+        where: { id: Number(req.params.id) },
+      });
+  
+      if (!institution) {
+        return res
+          .status(404)
+          .json({ msg: `No institution with the id: ${req.params.id} found` });
+      }
+  
+      institution = await prisma.institution.update({
+        where: { id: Number(req.params.id) },
+        data: { ...req.body },
+      });
+  
+      return res.json({
+        msg: `Institution with the id: ${req.params.id} successfully updated`,
+        data: institution,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
+
   export {
     createInstitution,
     getInstitutions,
     getInstitution,
+    updateInstitution,
   };
