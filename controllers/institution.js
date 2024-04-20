@@ -44,7 +44,30 @@ const createInstitution = async (req, res) => {
     }
   };
 
+  const getInstitution = async (req, res) => {
+    try {
+      const institution = await prisma.institution.findUnique({
+        where: { id: Number(req.params.id) },
+      });
+  
+      if (!institution) {
+        return res
+          .status(404)
+          .json({ msg: `No institution with the id: ${req.params.id} found` });
+      }
+  
+      return res.json({
+        data: institution,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
+
   export {
     createInstitution,
     getInstitutions,
+    getInstitution,
   };
