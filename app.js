@@ -1,14 +1,35 @@
 // Import the Express module
 import express from 'express';
+import institutionRoutes from "./routes/institution.js";
 
 // Import the CORS module
 import cors from 'cors';
 
 // Create an Express application
 const app = express();
+const setXContentTypeOptions = (req, res, next) => {
+  res.set("x-content-type-options", "nosniff");
+  next();
+};
+const setXFrameOptions = (req, res, next) => {
+  res.set("x-frame-options", "deny");
+  next();
+};
+const setContentSecurityPolicy = (req, res, next) => {
+  res.set("content-security-policy", "default-src 'none'");
+  next();
+};
+
 
 // Use the CORS module
 app.use(cors());
+app.use(setXContentTypeOptions);
+app.use(setXFrameOptions);
+app.use(setContentSecurityPolicy);
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use("/api/institutions", institutionRoutes);
+
 
 // Create a GET route
 app.get('/', (req, res) => {
@@ -19,6 +40,8 @@ app.get('/', (req, res) => {
 app.listen(3000, () => {
   console.log('Server is listening on port 3000.');
 });
+
+
 
 // Export the Express application. May be used by other modules. For example, API testing
 export default app;
