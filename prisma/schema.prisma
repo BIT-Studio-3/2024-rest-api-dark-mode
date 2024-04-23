@@ -10,11 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Institution {
-  id         Int          @id @default(autoincrement())
-  name       String
-  region     String
-  country    String
+model agentData {
+  accountId         Int          @id @default(autoincrement())
+  credits           Int
+  headquarters      String
+  name              String
+  shipCount         Int
+  startingFaction   String
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
 }
