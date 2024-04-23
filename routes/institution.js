@@ -1,19 +1,19 @@
 import express from "express";
 
 import {
-  createInstitution,
-  getInstitutions,
-  getInstitution,
-  updateInstitution,
-  deleteInstitution,
+  createAgentData,
+  getAgentDatas,
+  getAgentData,
+  updateAgentData,
+  deleteAgentData,
 } from "../controllers/institution.js";
 
 const router = express.Router();
 
-router.post("/", createInstitution);
-router.get("/", getInstitutions);
-router.get("/:id", getInstitution);
-router.put("/:id", updateInstitution);
-router.delete("/:id", deleteInstitution);
+router.post("/", createAgentData);
+router.get("/", getAgentDatas);
+router.get("/:id", getAgentData);
+router.put("/:id", updateAgentData);
+router.delete("/:id", deleteAgentData);
 
 export default router;

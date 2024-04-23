@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const createInstitution = async (req, res) => {
+const createAgentData = async (req, res) => {
     try {
       const contentType = req.headers["content-type"];
       if (!contentType || contentType !== "application/json") {
@@ -28,7 +28,7 @@ const createInstitution = async (req, res) => {
     }
   };
 
-  const getInstitutions = async (req, res) => {
+  const getAgentDatas = async (req, res) => {
     try {
       const institutions = await prisma.institution.findMany();
   
@@ -44,7 +44,7 @@ const createInstitution = async (req, res) => {
     }
   };
 
-  const getInstitution = async (req, res) => {
+  const getAgentData = async (req, res) => {
     try {
       const institution = await prisma.institution.findUnique({
         where: { id: Number(req.params.id) },
@@ -66,7 +66,7 @@ const createInstitution = async (req, res) => {
     }
   };
 
-  const updateInstitution = async (req, res) => {
+  const updateAgentData = async (req, res) => {
     try {
       const contentType = req.headers["content-type"];
       if (!contentType || contentType !== "application/json") {
@@ -101,7 +101,7 @@ const createInstitution = async (req, res) => {
     }
   };
 
-  const deleteInstitution = async (req, res) => {
+  const deleteAgentData = async (req, res) => {
     try {
       const institution = await prisma.institution.findUnique({
         where: { id: Number(req.params.id) },
@@ -128,9 +128,9 @@ const createInstitution = async (req, res) => {
   };
 
   export {
-    createInstitution,
-    getInstitutions,
-    getInstitution,
-    updateInstitution,
-    deleteInstitution,
+    createAgentData,
+    getAgentDatas,
+    getAgentData,
+    updateAgentData,
+    deleteAgentData,
   };

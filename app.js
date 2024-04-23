@@ -28,7 +28,7 @@ app.use(setXFrameOptions);
 app.use(setContentSecurityPolicy);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use("/api/institutions", institutionRoutes);
+app.use("/api/agentData", institutionRoutes);
 
 
 // Create a GET route
