@@ -41,7 +41,5 @@ app.listen(3000, () => {
   console.log('Server is listening on port 3000.');
 });
 
-
-
 // Export the Express application. May be used by other modules. For example, API testing
 export default app;
