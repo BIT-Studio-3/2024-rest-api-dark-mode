@@ -6,7 +6,7 @@ import {
   getAgentData,
   updateAgentData,
   deleteAgentData,
-} from "../controllers/institution.js";
+} from "../controllers/agent.js";
 
 const router = express.Router();
 
