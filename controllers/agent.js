@@ -14,11 +14,11 @@ const createAgentData = async (req, res) => {
         data: { ...req.body },
       });
   
-      const newagentData = await prisma.agentData.findMany();
+      const newAgentData = await prisma.agentData.findMany();
   
       return res.status(201).json({
         msg: "Agent successfully created",
-        data: newagentData,
+        data: newAgentData,
       });
     } catch (err) {
       return res.status(500).json({
