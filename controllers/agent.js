@@ -1,8 +1,7 @@
 import { PrismaClient } from "@prisma/client";
-
 const prisma = new PrismaClient();
 
-const createInstitution = async (req, res) => {
+const createAgentData = async (req, res) => {
     try {
       const contentType = req.headers["content-type"];
       if (!contentType || contentType !== "application/json") {
@@ -11,15 +10,15 @@ const createInstitution = async (req, res) => {
         });
       }
   
-      await prisma.institution.create({
+      await prisma.agentData.create({
         data: { ...req.body },
       });
   
-      const newInstitutions = await prisma.institution.findMany();
+      const newAgentData = await prisma.agentData.findMany();
   
       return res.status(201).json({
-        msg: "Institution successfully created",
-        data: newInstitutions,
+        msg: "Agent successfully created",
+        data: newAgentData,
       });
     } catch (err) {
       return res.status(500).json({
@@ -28,15 +27,15 @@ const createInstitution = async (req, res) => {
     }
   };
 
-  const getInstitutions = async (req, res) => {
+  const getAgentDatas = async (req, res) => {
     try {
-      const institutions = await prisma.institution.findMany();
+      const agentData = await prisma.agentData.findMany();
   
-      if (institutions.length === 0) {
-        return res.status(404).json({ msg: "No institutions found" });
+      if (agentData.length === 0) {
+        return res.status(404).json({ msg: "No agent found" });
       }
   
-      return res.json({ data: institutions });
+      return res.json({ data: agentData });
     } catch (err) {
       return res.status(500).json({
         msg: err.message,
@@ -44,20 +43,20 @@ const createInstitution = async (req, res) => {
     }
   };
 
-  const getInstitution = async (req, res) => {
+  const getAgentData = async (req, res) => {
     try {
-      const institution = await prisma.institution.findUnique({
+      const agentData = await prisma.agentData.findUnique({
         where: { id: Number(req.params.id) },
       });
   
-      if (!institution) {
+      if (!agentData) {
         return res
           .status(404)
-          .json({ msg: `No institution with the id: ${req.params.id} found` });
+          .json({ msg: `No agent data with the id: ${req.params.id} found` });
       }
   
       return res.json({
-        data: institution,
+        data: agentData,
       });
     } catch (err) {
       return res.status(500).json({
@@ -66,7 +65,7 @@ const createInstitution = async (req, res) => {
     }
   };
 
-  const updateInstitution = async (req, res) => {
+  const updateAgentData = async (req, res) => {
     try {
       const contentType = req.headers["content-type"];
       if (!contentType || contentType !== "application/json") {
@@ -75,24 +74,24 @@ const createInstitution = async (req, res) => {
         });
       }
   
-      let institution = await prisma.institution.findUnique({
+      let agentData = await prisma.agentData.findUnique({
         where: { id: Number(req.params.id) },
       });
   
-      if (!institution) {
+      if (!agentData) {
         return res
           .status(404)
-          .json({ msg: `No institution with the id: ${req.params.id} found` });
+          .json({ msg: `No agent data with the id: ${req.params.id} found` });
       }
   
-      institution = await prisma.institution.update({
+      agentData = await prisma.agentData.update({
         where: { id: Number(req.params.id) },
         data: { ...req.body },
       });
   
       return res.json({
-        msg: `Institution with the id: ${req.params.id} successfully updated`,
-        data: institution,
+        msg: `Agent with the id: ${req.params.id} successfully updated`,
+        data: agentData,
       });
     } catch (err) {
       return res.status(500).json({
@@ -101,24 +100,24 @@ const createInstitution = async (req, res) => {
     }
   };
 
-  const deleteInstitution = async (req, res) => {
+  const deleteAgentData = async (req, res) => {
     try {
-      const institution = await prisma.institution.findUnique({
+      const agentData = await prisma.agentData.findUnique({
         where: { id: Number(req.params.id) },
       });
   
-      if (!institution) {
+      if (!agentData) {
         return res
           .status(404)
-          .json({ msg: `No institution with the id: ${req.params.id} found` });
+          .json({ msg: `No agent with the id: ${req.params.id} found` });
       }
   
-      await prisma.institution.delete({
+      await prisma.agentData.delete({
         where: { id: Number(req.params.id) },
       });
   
       return res.json({
-        msg: `Institution with the id: ${req.params.id} successfully deleted`,
+        msg: `Agent with the id: ${req.params.id} successfully deleted`,
       });
     } catch (err) {
       return res.status(500).json({
@@ -128,9 +127,9 @@ const createInstitution = async (req, res) => {
   };
 
   export {
-    createInstitution,
-    getInstitutions,
-    getInstitution,
-    updateInstitution,
-    deleteInstitution,
+    createAgentData,
+    getAgentDatas,
+    getAgentData,
+    updateAgentData,
+    deleteAgentData,
   };
