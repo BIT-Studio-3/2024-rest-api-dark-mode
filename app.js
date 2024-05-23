@@ -1,6 +1,5 @@
 // Import the Express module
 import express from 'express';
-import institutionRoutes from "./routes/institution.js";
 import contractRoutes from "./routes/contract.js";
 
 // Import the CORS module
@@ -29,7 +28,6 @@ app.use(setXFrameOptions);
 app.use(setContentSecurityPolicy);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use("/api/institutions", institutionRoutes);
 app.use("/api/contract", contractRoutes);
 
 
@@ -42,8 +40,6 @@ app.get('/', (req, res) => {
 app.listen(3000, () => {
   console.log('Server is listening on port 3000.');
 });
-
-
 
 // Export the Express application. May be used by other modules. For example, API testing
 export default app;

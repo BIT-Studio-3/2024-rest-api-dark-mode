@@ -10,13 +10,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Institution {
+model Contract {
   id          Int          @id @default(autoincrement())
-  tpye        String
+  type        String
   resource    String
   location    String
-  deadline    String
-  description String
+  deadline    DateTime
+  onAccepted  Int
+  onFulfilled Int
+  tradeSymbol String
+  destinationSymbol String
+  unitsRequired Int
+  unitsFulfilled  Int
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
 }
