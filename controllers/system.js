@@ -101,9 +101,37 @@ const createSystem = async (req, res) => {
     }
   };
 
+  const deleteSystem = async (req, res) => {
+    try {
+      const system = await prisma.system.findUnique({
+        where: { id: Number(req.params.id) },
+      });
+  
+      if (!system) {
+        return res
+          .status(404)
+          .json({ msg: `No system with the id: ${req.params.id} found` });
+      }
+  
+      await prisma.system.delete({
+        where: { id: Number(req.params.id) },
+      });
+  
+      return res.json({
+        msg: `System with the id: ${req.params.id} successfully deleted`,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
+
+
   export{
     createSystem,
     getSystems,
     getSystem,
-    updateSystem
+    updateSystem,
+    deleteSystem
   }
