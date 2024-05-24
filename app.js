@@ -1,6 +1,7 @@
 // Import the Express module
 import express from 'express';
 import institutionRoutes from "./routes/institution.js";
+import systemRoutes from "./routes/system.js";
 
 // Import the CORS module
 import cors from 'cors';
@@ -29,6 +30,8 @@ app.use(setContentSecurityPolicy);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use("/api/institutions", institutionRoutes);
+app.use("/api/system", systemRoutes);
+
 
 
 // Create a GET route
