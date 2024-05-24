@@ -33,7 +33,7 @@ const createSystem = async (req, res) => {
       const systems = await prisma.system.findMany();
   
       if (systems.length === 0) {
-        return res.status(404).json({ msg: "No institutions found" });
+        return res.status(404).json({ msg: "No systems found" });
       }
   
       return res.json({ data: systems });
@@ -44,7 +44,30 @@ const createSystem = async (req, res) => {
     }
   };
 
+  const getSystem = async (req, res) => {
+    try {
+      const system = await prisma.system.findUnique({
+        where: { id: Number(req.params.id) },
+      });
+  
+      if (!system) {
+        return res
+          .status(404)
+          .json({ msg: `No system with the id: ${req.params.id} found` });
+      }
+  
+      return res.json({
+        data: system,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
+
   export{
     createSystem,
-    getSystems
+    getSystems,
+    getSystem
   }
