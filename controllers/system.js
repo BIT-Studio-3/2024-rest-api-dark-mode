@@ -28,6 +28,23 @@ const createSystem = async (req, res) => {
     }
   };
 
+  const getSystems = async (req, res) => {
+    try {
+      const systems = await prisma.system.findMany();
+  
+      if (systems.length === 0) {
+        return res.status(404).json({ msg: "No institutions found" });
+      }
+  
+      return res.json({ data: systems });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
+
   export{
-    createSystem
+    createSystem,
+    getSystems
   }
