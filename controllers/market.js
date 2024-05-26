@@ -30,6 +30,23 @@ const createMarket = async (req, res) => {
     }
   };
 
+  const getMarkets = async (req, res) => {
+    try {
+      const markets = await prisma.market.findMany();
+  
+      if (markets.length === 0) {
+        return res.status(404).json({ msg: "No markets found" });
+      }
+  
+      return res.json({ data: markets });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
+
   export{
-    createMarket
+    createMarket,
+    getMarkets
   }
