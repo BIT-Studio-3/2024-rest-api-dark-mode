@@ -46,7 +46,30 @@ const createMarket = async (req, res) => {
     }
   };
 
+  const getMarket = async (req, res) => {
+    try {
+      const market = await prisma.market.findUnique({
+        where: { id: Number(req.params.id) },
+      });
+  
+      if (!market) {
+        return res
+          .status(404)
+          .json({ msg: `No marketplace with the id: ${req.params.id} found` });
+      }
+  
+      return res.json({
+        data: market,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
+
   export{
     createMarket,
-    getMarkets
+    getMarkets,
+    getMarket,
   }
