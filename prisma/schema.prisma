@@ -11,7 +11,6 @@ datasource db {
 }
 
 model System {
-
   id          Int          @id @default(autoincrement())
   name        String
   xCoordinate Float
@@ -19,6 +18,19 @@ model System {
   faction     String?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
-  waypoints   Int
+  waypoints   Waypoint[]
+}
 
+model Waypoint {
+  id          Int          @id @default(autoincrement())
+  name        String
+  type        String
+  systemId    Int
+  xCoordinate Float
+  yCoordinate Float
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  system      System       @relation(fields: [systemId], references: [id])
+  markets     Int
+  ships       Int
 }
