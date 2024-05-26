@@ -67,8 +67,44 @@ const createWaypoint = async (req, res) => {
     }
   };
 
+  const updateWaypoint = async (req, res) => {
+    try {
+      const contentType = req.headers["content-type"];
+      if (!contentType || contentType !== "application/json") {
+        return res.status(400).json({
+          msg: "Invalid Content-Type. Expected application/json.",
+        });
+      }
+  
+      let waypoint = await prisma.waypoint.findUnique({
+        where: { id: Number(req.params.id) },
+      });
+  
+      if (!waypoint) {
+        return res
+          .status(404)
+          .json({ msg: `No waypoint with the id: ${req.params.id} found` });
+      }
+  
+      waypoint = await prisma.waypoint.update({
+        where: { id: Number(req.params.id) },
+        data: { ...req.body },
+      });
+  
+      return res.json({
+        msg: `Waypoint with the id: ${req.params.id} successfully updated`,
+        data: waypoint,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
+
   export{
     createWaypoint,
     getWaypoints,
-    getWaypoint
+    getWaypoint,
+    updateWaypoint
   }
