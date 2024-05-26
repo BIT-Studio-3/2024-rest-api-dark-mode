@@ -34,7 +34,7 @@ const createWaypoint = async (req, res) => {
       const waypoints = await prisma.waypoint.findMany();
   
       if (waypoints.length === 0) {
-        return res.status(404).json({ msg: "No systems found" });
+        return res.status(404).json({ msg: "No waypoints found" });
       }
   
       return res.json({ data: waypoints });
@@ -45,7 +45,30 @@ const createWaypoint = async (req, res) => {
     }
   };
 
+  const getWaypoint = async (req, res) => {
+    try {
+      const waypoint = await prisma.waypoint.findUnique({
+        where: { id: Number(req.params.id) },
+      });
+  
+      if (!waypoint) {
+        return res
+          .status(404)
+          .json({ msg: `No waypoints with the id: ${req.params.id} found` });
+      }
+  
+      return res.json({
+        data: waypoint,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
+
   export{
     createWaypoint,
-    getWaypoints
+    getWaypoints,
+    getWaypoint
   }
