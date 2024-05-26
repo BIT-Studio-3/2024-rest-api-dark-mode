@@ -31,6 +31,15 @@ model Waypoint {
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   system      System       @relation(fields: [systemId], references: [id])
-  markets     Int
-  ships       Int
+  markets     Market[] 
+}
+
+model Market {
+  id          Int          @id @default(autoincrement())
+  name        String
+  description String
+  waypointId  Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  waypoint    Waypoint     @relation(fields: [waypointId], references: [id])
 }
