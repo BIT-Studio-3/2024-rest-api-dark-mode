@@ -1,6 +1,7 @@
 // Import the Express module
 import express from 'express';
 import systemRoutes from "./routes/system.js";
+import waypointRoutes from "./routes/waypoints.js";
 
 // Import the CORS module
 import cors from 'cors';
@@ -29,6 +30,7 @@ app.use(setContentSecurityPolicy);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use("/api/system", systemRoutes);
+app.use("/api/waypoints", waypointRoutes);
 
 
 

@@ -13,6 +13,7 @@ const createSystem = async (req, res) => {
   
       await prisma.system.create({
         data: { ...req.body },
+
       });
   
       const newSystems = await prisma.system.findMany();
