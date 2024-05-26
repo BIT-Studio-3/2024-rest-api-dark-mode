@@ -2,7 +2,7 @@ import express from "express";
 
 import {
   createMarket,
-} from "../controllers/system.js";
+} from "../controllers/market.js";
 
 const router = express.Router();
 
