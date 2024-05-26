@@ -68,8 +68,44 @@ const createMarket = async (req, res) => {
     }
   };
 
+  const updateMarket = async (req, res) => {
+    try {
+      const contentType = req.headers["content-type"];
+      if (!contentType || contentType !== "application/json") {
+        return res.status(400).json({
+          msg: "Invalid Content-Type. Expected application/json.",
+        });
+      }
+  
+      let market = await prisma.market.findUnique({
+        where: { id: Number(req.params.id) },
+      });
+  
+      if (!market) {
+        return res
+          .status(404)
+          .json({ msg: `No marketplace with the id: ${req.params.id} found` });
+      }
+  
+      market = await prisma.market.update({
+        where: { id: Number(req.params.id) },
+        data: { ...req.body },
+      });
+  
+      return res.json({
+        msg: `Marketplace with the id: ${req.params.id} successfully updated`,
+        data: market,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
+
   export{
     createMarket,
     getMarkets,
     getMarket,
+    updateMarket
   }
