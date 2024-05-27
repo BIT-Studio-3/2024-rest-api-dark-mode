@@ -2,7 +2,8 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const createInstitution = async (req, res) => {
+
+const createMarket = async (req, res) => {
     try {
       const contentType = req.headers["content-type"];
       if (!contentType || contentType !== "application/json") {
@@ -11,15 +12,16 @@ const createInstitution = async (req, res) => {
         });
       }
   
-      await prisma.institution.create({
+      await prisma.market.create({
         data: { ...req.body },
+
       });
   
-      const newInstitutions = await prisma.institution.findMany();
+      const newMarket = await prisma.market.findMany();
   
       return res.status(201).json({
-        msg: "Institution successfully created",
-        data: newInstitutions,
+        msg: "Marketplace waypoint successfully created",
+        data: newMarket,
       });
     } catch (err) {
       return res.status(500).json({
@@ -28,15 +30,15 @@ const createInstitution = async (req, res) => {
     }
   };
 
-  const getInstitutions = async (req, res) => {
+  const getMarkets = async (req, res) => {
     try {
-      const institutions = await prisma.institution.findMany();
+      const markets = await prisma.market.findMany();
   
-      if (institutions.length === 0) {
-        return res.status(404).json({ msg: "No institutions found" });
+      if (markets.length === 0) {
+        return res.status(404).json({ msg: "No markets found" });
       }
   
-      return res.json({ data: institutions });
+      return res.json({ data: markets });
     } catch (err) {
       return res.status(500).json({
         msg: err.message,
@@ -44,20 +46,20 @@ const createInstitution = async (req, res) => {
     }
   };
 
-  const getInstitution = async (req, res) => {
+  const getMarket = async (req, res) => {
     try {
-      const institution = await prisma.institution.findUnique({
+      const market = await prisma.market.findUnique({
         where: { id: Number(req.params.id) },
       });
   
-      if (!institution) {
+      if (!market) {
         return res
           .status(404)
-          .json({ msg: `No institution with the id: ${req.params.id} found` });
+          .json({ msg: `No marketplace with the id: ${req.params.id} found` });
       }
   
       return res.json({
-        data: institution,
+        data: market,
       });
     } catch (err) {
       return res.status(500).json({
@@ -66,7 +68,7 @@ const createInstitution = async (req, res) => {
     }
   };
 
-  const updateInstitution = async (req, res) => {
+  const updateMarket = async (req, res) => {
     try {
       const contentType = req.headers["content-type"];
       if (!contentType || contentType !== "application/json") {
@@ -75,24 +77,24 @@ const createInstitution = async (req, res) => {
         });
       }
   
-      let institution = await prisma.institution.findUnique({
+      let market = await prisma.market.findUnique({
         where: { id: Number(req.params.id) },
       });
   
-      if (!institution) {
+      if (!market) {
         return res
           .status(404)
-          .json({ msg: `No institution with the id: ${req.params.id} found` });
+          .json({ msg: `No marketplace with the id: ${req.params.id} found` });
       }
   
-      institution = await prisma.institution.update({
+      market = await prisma.market.update({
         where: { id: Number(req.params.id) },
         data: { ...req.body },
       });
   
       return res.json({
-        msg: `Institution with the id: ${req.params.id} successfully updated`,
-        data: institution,
+        msg: `Marketplace with the id: ${req.params.id} successfully updated`,
+        data: market,
       });
     } catch (err) {
       return res.status(500).json({
@@ -101,24 +103,24 @@ const createInstitution = async (req, res) => {
     }
   };
 
-  const deleteInstitution = async (req, res) => {
+  const deleteMarket = async (req, res) => {
     try {
-      const institution = await prisma.institution.findUnique({
+      const market = await prisma.market.findUnique({
         where: { id: Number(req.params.id) },
       });
   
-      if (!institution) {
+      if (!market) {
         return res
           .status(404)
-          .json({ msg: `No institution with the id: ${req.params.id} found` });
+          .json({ msg: `No marketplace with the id: ${req.params.id} found` });
       }
   
-      await prisma.institution.delete({
+      await prisma.market.delete({
         where: { id: Number(req.params.id) },
       });
   
       return res.json({
-        msg: `Institution with the id: ${req.params.id} successfully deleted`,
+        msg: `Marketplace with the id: ${req.params.id} successfully deleted`,
       });
     } catch (err) {
       return res.status(500).json({
@@ -127,10 +129,10 @@ const createInstitution = async (req, res) => {
     }
   };
 
-  export {
-    createInstitution,
-    getInstitutions,
-    getInstitution,
-    updateInstitution,
-    deleteInstitution,
-  };
+  export{
+    createMarket,
+    getMarkets,
+    getMarket,
+    updateMarket,
+    deleteMarket
+  }
