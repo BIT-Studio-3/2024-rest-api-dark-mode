@@ -10,11 +10,74 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Institution {
-  id         Int          @id @default(autoincrement())
-  name       String
-  region     String
-  country    String
+model Contract {
+  id          Int          @id @default(autoincrement())
+  type        String
+  resource    String
+  location    String
+  deadline    DateTime
+  onAccepted  Int
+  onFulfilled Int
+  tradeSymbol String
+  destinationSymbol String
+  unitsRequired Int
+  unitsFulfilled  Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model AgentData {
+  id                Int          @id @default(autoincrement())
+  name              String
+  accountId         Int
+  credits           Int
+  shipCount         Int
+  startingFaction   String
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
+}
+
+model System {
+  id          Int          @id @default(autoincrement())
+  name        String
+  xCoordinate Float
+  yCoordinate Float
+  faction     String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  waypoints   Waypoint[]
+}
+
+model Waypoint {
+  id          Int          @id @default(autoincrement())
+  name        String
+  type        String
+  systemId    Int
+  xCoordinate Float
+  yCoordinate Float
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  system      System       @relation(fields: [systemId], references: [id])
+  markets     Market[] 
+  shipyards   Shipyard[]
+}
+
+model Market {
+  id          Int          @id @default(autoincrement())
+  name        String
+  description String
+  waypointId  Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  waypoint    Waypoint     @relation(fields: [waypointId], references: [id])
+}
+
+model Shipyard {
+  id          Int          @id @default(autoincrement())
+  name        String
+  description String
+  waypointId  Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now())
+  waypoint    Waypoint     @relation(fields: [waypointId], references: [id])
 }
