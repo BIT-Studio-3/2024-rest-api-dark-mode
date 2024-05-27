@@ -67,8 +67,44 @@ const createShipyard = async (req, res) => {
     }
   };
 
+  const updateShipyard= async (req, res) => {
+    try {
+      const contentType = req.headers["content-type"];
+      if (!contentType || contentType !== "application/json") {
+        return res.status(400).json({
+          msg: "Invalid Content-Type. Expected application/json.",
+        });
+      }
+  
+      let shipyard = await prisma.shipyard.findUnique({
+        where: { id: Number(req.params.id) },
+      });
+  
+      if (!shipyard) {
+        return res
+          .status(404)
+          .json({ msg: `No shipyard with the id: ${req.params.id} found` });
+      }
+  
+      shipyard = await prisma.shipyard.update({
+        where: { id: Number(req.params.id) },
+        data: { ...req.body },
+      });
+  
+      return res.json({
+        msg: `Shipyard with the id: ${req.params.id} successfully updated`,
+        data: shipyard,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
+
   export{
     createShipyard,
     getShipyards,
-    getShipyard
+    getShipyard,
+    updateShipyard
   }
