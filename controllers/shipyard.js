@@ -102,9 +102,35 @@ const createShipyard = async (req, res) => {
     }
   };
 
+  const deleteShipyard = async (req, res) => {
+    try {
+      const shipyard = await prisma.shipyard.findUnique({
+        where: { id: Number(req.params.id) },
+      });
+  
+      if (!shipyard) {
+        return res
+          .status(404)
+          .json({ msg: `No shipyard with the id: ${req.params.id} found` });
+      }
+  
+      await prisma.shipyard.delete({
+        where: { id: Number(req.params.id) },
+      });
+  
+      return res.json({
+        msg: `Shipyard with the id: ${req.params.id} successfully deleted`,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
   export{
     createShipyard,
     getShipyards,
     getShipyard,
-    updateShipyard
+    updateShipyard,
+    deleteShipyard
   }
