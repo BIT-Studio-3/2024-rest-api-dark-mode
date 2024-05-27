@@ -29,6 +29,23 @@ const createShipyard = async (req, res) => {
     }
   };
 
+  const getShipyards = async (req, res) => {
+    try {
+      const shipyards = await prisma.shipyard.findMany();
+  
+      if (shipyards.length === 0) {
+        return res.status(404).json({ msg: "No shipyards found" });
+      }
+  
+      return res.json({ data: shipyards });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
+
   export{
-    createShipyard
+    createShipyard,
+    getShipyards
   }
