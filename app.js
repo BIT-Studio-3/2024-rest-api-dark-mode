@@ -3,6 +3,7 @@ import express from 'express';
 import systemRoutes from "./routes/system.js";
 import waypointRoutes from "./routes/waypoints.js";
 import marketRoutes from "./routes/market.js";
+import shipyardRoutes from "./routes/shipyard.js";
 
 // Import the CORS module
 import cors from 'cors';
@@ -33,6 +34,7 @@ app.use(express.json());
 app.use("/api/system", systemRoutes);
 app.use("/api/waypoints", waypointRoutes);
 app.use("/api/market", marketRoutes);
+app.use("/api/shipyard", shipyardRoutes);
 
 
 // Create a GET route
