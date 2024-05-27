@@ -1,6 +1,12 @@
 // Import the Express module
 import express from 'express';
+
 import contractRoutes from "./routes/contract.js";
+import systemRoutes from "./routes/system.js";
+import waypointRoutes from "./routes/waypoints.js";
+import marketRoutes from "./routes/market.js";
+import shipyardRoutes from "./routes/shipyard.js";
+
 
 // Import the CORS module
 import cors from 'cors';
@@ -29,6 +35,10 @@ app.use(setContentSecurityPolicy);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use("/api/contract", contractRoutes);
+app.use("/api/system", systemRoutes);
+app.use("/api/waypoints", waypointRoutes);
+app.use("/api/market", marketRoutes);
+app.use("/api/shipyard", shipyardRoutes);
 
 
 // Create a GET route
