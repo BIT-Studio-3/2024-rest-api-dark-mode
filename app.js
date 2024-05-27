@@ -5,6 +5,7 @@ import waypointRoutes from "./routes/waypoints.js";
 import marketRoutes from "./routes/market.js";
 import shipyardRoutes from "./routes/shipyard.js";
 import agentRoutes from "./routes/agent.js";
+import contractRoutes from "./routes/contract.js";
 
 // Import the CORS module
 import cors from 'cors';
@@ -37,6 +38,7 @@ app.use("/api/waypoints", waypointRoutes);
 app.use("/api/market", marketRoutes);
 app.use("/api/shipyard", shipyardRoutes);
 app.use("/api/agentData", agentRoutes);
+app.use("/api/contract", contractRoutes);
 
 
 // Create a GET route
