@@ -10,6 +10,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id          Int          @id @default(autoincrement())
+  name        String
+  password    String
+  contracts   Contract[]   @relation("UserContracts") 
+  systemId    Int
+  system      System       @relation(fields: [systemId], references: [id])
+  agentData   AgentData[]  @relation("UserAgentData")
+}
+
 model Contract {
   id          Int          @id @default(autoincrement())
   type        String
@@ -22,6 +32,8 @@ model Contract {
   destinationSymbol String
   unitsRequired Int
   unitsFulfilled  Int
+  user              User         @relation("UserContracts", fields: [userId], references: [id]) 
+  userId            Int
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
 }
@@ -35,6 +47,8 @@ model AgentData {
   startingFaction   String
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
+  user        User?       @relation("UserAgentData", fields: [userId], references: [id]) 
+  userId      Int?        
 }
 
 model System {
@@ -46,6 +60,7 @@ model System {
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   waypoints   Waypoint[]
+  users       User[]
 }
 
 model Waypoint {
