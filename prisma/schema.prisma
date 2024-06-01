@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id          Int          @id @default(autoincrement())
+  id          String          @id @default(uuid())
   name        String
   password    String
   contracts   Contract[]   @relation("UserContracts") 
@@ -33,7 +33,7 @@ model Contract {
   unitsRequired Int
   unitsFulfilled  Int
   user              User         @relation("UserContracts", fields: [userId], references: [id]) 
-  userId            Int
+  userId            String
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
 }
@@ -48,7 +48,7 @@ model AgentData {
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
   user        User?       @relation("UserAgentData", fields: [userId], references: [id]) 
-  userId      Int?        
+  userId      String?        
 }
 
 model System {
