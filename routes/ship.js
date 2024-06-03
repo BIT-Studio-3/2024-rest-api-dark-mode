@@ -8,9 +8,13 @@ import {
   deleteShip
 } from "../controllers/ship.js";
 
+import { 
+  validatePostShip 
+} from "../middleware/shipValidation.js";
+
 const router = express.Router();
 
-router.post("/", createShip);
+router.post("/", validatePostShip, createShip);
 router.get("/", getShips);
 router.get("/:id", getShip);
 router.put("/:id", updateShip);

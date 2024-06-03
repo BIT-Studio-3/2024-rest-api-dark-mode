@@ -8,9 +8,13 @@ import {
   deleteMarket,
 } from "../controllers/market.js";
 
+import { 
+  validatePostMarket
+} from "../middleware/marketValidation.js";
+
 const router = express.Router();
 
-router.post("/", createMarket);
+router.post("/", validatePostMarket, createMarket);
 router.get("/", getMarkets);
 router.get("/:id", getMarket);
 router.put("/:id", updateMarket);
