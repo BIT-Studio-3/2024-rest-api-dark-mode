@@ -1,4 +1,5 @@
 import express from "express";
+import { validateContract } from "../middleware/contractValidation.js";
 
 import {
     createContract,
@@ -10,7 +11,7 @@ import {
 
 const router = express.Router();
 
-router.post("/", createContract);
+router.post("/", validateContract, createContract);
 router.get("/", getContracts);
 router.get("/:id", getContract);
 router.put("/:id", updateContract);
