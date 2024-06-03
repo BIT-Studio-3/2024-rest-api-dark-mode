@@ -29,6 +29,23 @@ const createShip = async (req, res) => {
     }
   };
 
+  const getShips = async (req, res) => {
+    try {
+      const ships = await prisma.ship.findMany();
+  
+      if (ships.length === 0) {
+        return res.status(404).json({ msg: "No ships found" });
+      }
+  
+      return res.json({ data: ships });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
+
   export{
-    createShip
+    createShip,
+    getShips
   }
