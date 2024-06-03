@@ -81,18 +81,46 @@ model Market {
   id          Int          @id @default(autoincrement())
   name        String
   description String
+  xCoordinate Float
+  yCoordinate Float
   waypointId  Int
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   waypoint    Waypoint     @relation(fields: [waypointId], references: [id])
+  marketItems MarketItem[]
 }
 
 model Shipyard {
   id          Int          @id @default(autoincrement())
   name        String
   description String
+  xCoordinate Float
+  yCoordinate Float
   waypointId  Int
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @default(now())
   waypoint    Waypoint     @relation(fields: [waypointId], references: [id])
+  ship        Ship[]
+}
+
+model MarketItem {
+  id          Int          @id @default(autoincrement())
+  name        String
+  price       Float
+  quantity    Int
+  marketId    Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  market      Market       @relation(fields: [marketId], references: [id])
+}
+
+model Ship {
+  id          Int          @id @default(autoincrement())
+  name        String
+  type        String
+  price       Float
+  shipyardId  Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  shipyard    Shipyard     @relation(fields: [shipyardId], references: [id])
 }
