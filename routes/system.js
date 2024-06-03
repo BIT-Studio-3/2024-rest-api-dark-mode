@@ -1,4 +1,5 @@
 import express from "express";
+import { validateSystem } from "../middleware/systemValidation.js";
 
 import {
   createSystem,
@@ -10,7 +11,7 @@ import {
 
 const router = express.Router();
 
-router.post("/", createSystem);
+router.post("/", validateSystem, createSystem);
 router.get("/", getSystems);
 router.get("/:id", getSystem);
 router.put("/:id", updateSystem);
