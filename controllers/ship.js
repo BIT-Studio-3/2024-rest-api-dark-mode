@@ -67,9 +67,45 @@ const createShip = async (req, res) => {
     }
   };
 
+  const updateShip = async (req, res) => {
+    try {
+      const contentType = req.headers["content-type"];
+      if (!contentType || contentType !== "application/json") {
+        return res.status(400).json({
+          msg: "Invalid Content-Type. Expected application/json.",
+        });
+      }
+  
+      let shipUpdate = await prisma.ship.findUnique({
+        where: { id: Number(req.params.id) },
+      });
+  
+      if (!shipUpdate) {
+        return res
+          .status(404)
+          .json({ msg: `No ship with the id: ${req.params.id} found` });
+      }
+  
+      shipUpdate = await prisma.ship.update({
+        where: { id: Number(req.params.id) },
+        data: { ...req.body },
+      });
+  
+      return res.json({
+        msg: `Ship with the id: ${req.params.id} successfully updated`,
+        data: shipUpdate,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
+
 
   export{
     createShip,
     getShips,
-    getShip
+    getShip,
+    updateShip
   }
