@@ -8,9 +8,13 @@ import {
   deleteShipyard,
 } from "../controllers/shipyard.js";
 
+import { 
+  validatePostShipyard 
+} from "../middleware/shipyardValidation.js";
+
 const router = express.Router();
 
-router.post("/", createShipyard);
+router.post("/", validatePostShipyard, createShipyard);
 router.get("/", getShipyards);
 router.get("/:id", getShipyard);
 router.put("/:id", updateShipyard);
