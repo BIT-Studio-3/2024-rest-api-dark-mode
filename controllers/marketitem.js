@@ -102,10 +102,36 @@ const createMarketItem = async (req, res) => {
     }
   };
 
+  const deleteMarketItem = async (req, res) => {
+    try {
+      const marketItem = await prisma.marketItem.findUnique({
+        where: { id: Number(req.params.id) },
+      });
+  
+      if (!marketItem) {
+        return res
+          .status(404)
+          .json({ msg: `No item with the id: ${req.params.id} found` });
+      }
+  
+      await prisma.marketItem.delete({
+        where: { id: Number(req.params.id) },
+      });
+  
+      return res.json({
+        msg: `Item with the id: ${req.params.id} successfully deleted`,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
 
   export{
     createMarketItem,
     getMarketItems,
     getMarketItem,
-    updateMarketItem
+    updateMarketItem,
+    deleteMarketItem
   }
