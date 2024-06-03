@@ -102,10 +102,36 @@ const createShip = async (req, res) => {
     }
   };
 
+  const deleteShip = async (req, res) => {
+    try {
+      const ship = await prisma.ship.findUnique({
+        where: { id: Number(req.params.id) },
+      });
+  
+      if (!ship) {
+        return res
+          .status(404)
+          .json({ msg: `No ship with the id: ${req.params.id} found` });
+      }
+  
+      await prisma.ship.delete({
+        where: { id: Number(req.params.id) },
+      });
+  
+      return res.json({
+        msg: `Ship with the id: ${req.params.id} successfully deleted`,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
 
   export{
     createShip,
     getShips,
     getShip,
-    updateShip
+    updateShip,
+    deleteShip
   }
