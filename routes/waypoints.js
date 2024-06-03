@@ -1,4 +1,5 @@
 import express from "express";
+import { validateWaypoint } from "../middleware/waypointValidation.js";
 
 import {
   createWaypoint,
@@ -10,7 +11,7 @@ import {
 
 const router = express.Router();
 
-router.post("/", createWaypoint);
+router.post("/", validateWaypoint, createWaypoint);
 router.get("/", getWaypoints);
 router.get("/:id", getWaypoint);
 router.put("/:id", updateWaypoint);
