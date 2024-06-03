@@ -45,7 +45,31 @@ const createShip = async (req, res) => {
     }
   };
 
+  const getShip = async (req, res) => {
+    try {
+      const ship = await prisma.ship.findUnique({
+        where: { id: Number(req.params.id) },
+      });
+  
+      if (!ship) {
+        return res
+          .status(404)
+          .json({ msg: `No ship with the id: ${req.params.id} found` });
+      }
+  
+      return res.json({
+        data: ship,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        msg: err.message,
+      });
+    }
+  };
+
+
   export{
     createShip,
-    getShips
+    getShips,
+    getShip
   }
