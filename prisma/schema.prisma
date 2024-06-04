@@ -27,7 +27,7 @@ model Contract {
 }
 
 model AgentData {
-  id                Int          @id @default(autoincrement())
+  id                String          @id @default(uuid())
   name              String
   password          String
   accountId         Int
