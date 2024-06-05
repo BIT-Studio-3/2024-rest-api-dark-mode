@@ -15,7 +15,7 @@ const register = async(req, res) => {
 
         const { name, password, accountId, credits, shipCount, startingFaction } = req.body;
 
-        let agent = await prisma.agentData.findUnique({ where: { name } });
+        let agent = await prisma.agentData.findFirst({ where: { name } });
 
         if (agent) return res.status(409).json({ msg: "Agent already exists" });
 
@@ -50,7 +50,7 @@ const login = async(req, res) => {
 
         const { name, password } = req.body;
 
-        const agent = await prisma.agentData.findUnique({ where: { name } });
+        const agent = await prisma.agentData.findFirst({ where: { name } });
 
         if (!agent) return res.status(401).json({ msg: "Invalid name" });
 
@@ -63,7 +63,7 @@ const login = async(req, res) => {
 
         const token = jwt.sign({
                 id: agent.id,
-                name: agent.name,
+                name: agent.name
             },
             JWT_SECRET, { expiresIn: JWT_LIFETIME }
         );

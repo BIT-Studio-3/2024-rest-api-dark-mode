@@ -28,7 +28,7 @@ model Contract {
 
 model AgentData {
   id                String          @id @default(uuid())
-  name              String
+  name              String          
   password          String
   accountId         Int
   credits           Int

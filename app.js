@@ -8,6 +8,8 @@ import marketItemRoutes from "./routes/marketitem.js";
 import shipRoutes from "./routes/ship.js";
 import agentRoutes from "./routes/agent.js";
 import contractRoutes from "./routes/contract.js";
+import authRouteMiddleware from "./middleware/authRoute.js";
+import authRoutes from "./routes/auth.js";
 
 // Import the CORS module
 import cors from 'cors';
@@ -15,16 +17,16 @@ import cors from 'cors';
 // Create an Express application
 const app = express();
 const setXContentTypeOptions = (req, res, next) => {
-  res.set("x-content-type-options", "nosniff");
-  next();
+    res.set("x-content-type-options", "nosniff");
+    next();
 };
 const setXFrameOptions = (req, res, next) => {
-  res.set("x-frame-options", "deny");
-  next();
+    res.set("x-frame-options", "deny");
+    next();
 };
 const setContentSecurityPolicy = (req, res, next) => {
-  res.set("content-security-policy", "default-src 'none'");
-  next();
+    res.set("content-security-policy", "default-src 'none'");
+    next();
 };
 
 
@@ -43,16 +45,17 @@ app.use("/api/marketItems", marketItemRoutes);
 app.use("/api/ships", shipRoutes);
 app.use("/api/agentData", agentRoutes);
 app.use("/api/contract", contractRoutes);
+app.use("/api/auth", authRoutes);
 
 
 // Create a GET route
 app.get('/', (req, res) => {
-  res.send('Hello, World!');
+    res.send('Hello, World!');
 });
 
 // Start the server on port 3000
 app.listen(3000, () => {
-  console.log('Server is listening on port 3000.');
+    console.log('Server is listening on port 3000.');
 });
 
 
