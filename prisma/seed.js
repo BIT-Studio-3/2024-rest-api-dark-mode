@@ -77,6 +77,53 @@ const main = async () => {
       },
     });
 
+    await prisma.waypoint.create({
+        data: {
+          name: "Waypoint 1",
+          type: "ASTEROID",
+          systemId: betaProxima.id,
+          xCoordinate: 11.1,
+          yCoordinate: 25.1,
+        },
+      });
+      await prisma.waypoint.create({
+        data: {
+          name: "Waypoint 2",
+          type: "SHIPYARD",
+          systemId: betaProxima.id,
+          xCoordinate: 11.2,
+          yCoordinate: 25.2,
+        },
+      });
+      await prisma.waypoint.create({
+        data: {
+          name: "Waypoint 3",
+          type: "ASTEROID",
+          systemId: betaProxima.id,
+          xCoordinate: 11.3,
+          yCoordinate: 25.3,
+        },
+      });
+      await prisma.waypoint.create({
+        data: {
+          name: "Waypoint 4",
+          type: "ASTEROID",
+          systemId: betaProxima.id,
+          xCoordinate: 11.4,
+          yCoordinate: 25.4,
+        },
+      });
+      await prisma.waypoint.create({
+        data: {
+          name: "Waypoint 5",
+          type: "ASTEROID",
+          systemId: betaProxima.id,
+          xCoordinate: 11.5,
+          yCoordinate: 25.5,
+        },
+      });
+  
+
     console.log("Systems and waypoints seeded successfully.");
   } catch (err) {
     console.error("Error seeding systems and waypoints:", err);
