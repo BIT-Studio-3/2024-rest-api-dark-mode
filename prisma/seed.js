@@ -3,7 +3,6 @@ const prisma = new PrismaClient();
 
 const main = async () => {
   try {
-
     const alphaCentauri = await prisma.system.create({
       data: {
         name: "Alpha Centauri",
@@ -78,10 +77,56 @@ const main = async () => {
     });
 
     await prisma.waypoint.create({
+      data: {
+        name: "Waypoint 1",
+        type: "ASTEROID",
+        systemId: betaProxima.id,
+        xCoordinate: 11.1,
+        yCoordinate: 25.1,
+      },
+    });
+    await prisma.waypoint.create({
+      data: {
+        name: "Waypoint 2",
+        type: "SHIPYARD",
+        systemId: betaProxima.id,
+        xCoordinate: 11.2,
+        yCoordinate: 25.2,
+      },
+    });
+    await prisma.waypoint.create({
+      data: {
+        name: "Waypoint 3",
+        type: "ASTEROID",
+        systemId: betaProxima.id,
+        xCoordinate: 11.3,
+        yCoordinate: 25.3,
+      },
+    });
+    await prisma.waypoint.create({
+      data: {
+        name: "Waypoint 4",
+        type: "ASTEROID",
+        systemId: betaProxima.id,
+        xCoordinate: 11.4,
+        yCoordinate: 25.4,
+      },
+    });
+    await prisma.waypoint.create({
+      data: {
+        name: "Waypoint 5",
+        type: "ASTEROID",
+        systemId: betaProxima.id,
+        xCoordinate: 11.5,
+        yCoordinate: 25.5,
+      },
+    });
+
+    await prisma.waypoint.create({
         data: {
           name: "Waypoint 1",
           type: "ASTEROID",
-          systemId: betaProxima.id,
+          systemId: gammaHercules.id,
           xCoordinate: 11.1,
           yCoordinate: 25.1,
         },
@@ -89,8 +134,8 @@ const main = async () => {
       await prisma.waypoint.create({
         data: {
           name: "Waypoint 2",
-          type: "SHIPYARD",
-          systemId: betaProxima.id,
+          type: "ASTEROID",
+          systemId: gammaHercules.id,
           xCoordinate: 11.2,
           yCoordinate: 25.2,
         },
@@ -99,7 +144,7 @@ const main = async () => {
         data: {
           name: "Waypoint 3",
           type: "ASTEROID",
-          systemId: betaProxima.id,
+          systemId: gammaHercules.id,
           xCoordinate: 11.3,
           yCoordinate: 25.3,
         },
@@ -108,7 +153,7 @@ const main = async () => {
         data: {
           name: "Waypoint 4",
           type: "ASTEROID",
-          systemId: betaProxima.id,
+          systemId: gammaHercules.id,
           xCoordinate: 11.4,
           yCoordinate: 25.4,
         },
@@ -117,7 +162,7 @@ const main = async () => {
         data: {
           name: "Waypoint 5",
           type: "ASTEROID",
-          systemId: betaProxima.id,
+          systemId: gammaHercules.id,
           xCoordinate: 11.5,
           yCoordinate: 25.5,
         },
