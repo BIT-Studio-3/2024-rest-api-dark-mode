@@ -196,21 +196,64 @@ const main = async () => {
           },
         });
       } else if (waypoint.type === "SHIPYARD") {
-        await prisma.shipyard.create({
+        const shipyard = await prisma.shipyard.create({
           data: {
             name: `${waypoint.name} Shipyard`,
-            description:
-              "A shipyard where ships within the system are available for purchase",
+            description: `Shipyard at ${waypoint.name}`,
             xCoordinate: waypoint.xCoordinate,
             yCoordinate: waypoint.yCoordinate,
             waypointId: createdWaypoint.id,
+          },
+        });
+
+        await prisma.ship.create({
+          data: {
+            name: "Kamikaze",
+            type: "Fighter",
+            price: 10000.0,
+            shipyardId: shipyard.id,
+          },
+        });
+        await prisma.ship.create({
+          data: {
+            name: "B12 Bomber",
+            type: "Fighter",
+            price: 50000.0,
+            shipyardId: shipyard.id,
+          },
+        });
+
+        await prisma.ship.create({
+          data: {
+            name: "Pointbreak",
+            type: "Scout",
+            price: 15000.0,
+            shipyardId: shipyard.id,
+          },
+        });
+
+        await prisma.ship.create({
+          data: {
+            name: "Helmbreaker",
+            type: "Freighter",
+            price: 500000.0,
+            shipyardId: shipyard.id,
+          },
+        });
+
+        await prisma.ship.create({
+          data: {
+            name: "Gallileo",
+            type: "Construction",
+            price: 45000.0,
+            shipyardId: shipyard.id,
           },
         });
       }
     }
 
     console.log(
-      "Systems, waypoints, markets, and shipyards seeded successfully."
+      "Systems, waypoints, markets, shipyards, market items, and ships seeded successfully."
     );
   } catch (err) {
     console.error("Error seeding data:", err);
