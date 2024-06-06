@@ -3,7 +3,8 @@ const prisma = new PrismaClient();
 
 const main = async () => {
   try {
-    await prisma.system.create({
+
+    const alphaCentauri = await prisma.system.create({
       data: {
         name: "Alpha Centauri",
         xCoordinate: 11,
@@ -12,7 +13,7 @@ const main = async () => {
       },
     });
 
-    await prisma.system.create({
+    const betaProxima = await prisma.system.create({
       data: {
         name: "Beta Proxima",
         xCoordinate: 50,
@@ -21,7 +22,7 @@ const main = async () => {
       },
     });
 
-    await prisma.system.create({
+    const gammaHercules = await prisma.system.create({
       data: {
         name: "Gamma Hercules",
         xCoordinate: 24.5,
@@ -30,9 +31,55 @@ const main = async () => {
       },
     });
 
-    console.log("Systems seeded successfully.");
+    await prisma.waypoint.create({
+      data: {
+        name: "Waypoint 1",
+        type: "ASTEROID",
+        systemId: alphaCentauri.id,
+        xCoordinate: 11.1,
+        yCoordinate: 25.1,
+      },
+    });
+    await prisma.waypoint.create({
+      data: {
+        name: "Waypoint 2",
+        type: "ASTEROID",
+        systemId: alphaCentauri.id,
+        xCoordinate: 11.2,
+        yCoordinate: 25.2,
+      },
+    });
+    await prisma.waypoint.create({
+      data: {
+        name: "Waypoint 3",
+        type: "MARKETPLACE",
+        systemId: alphaCentauri.id,
+        xCoordinate: 11.3,
+        yCoordinate: 25.3,
+      },
+    });
+    await prisma.waypoint.create({
+      data: {
+        name: "Waypoint 4",
+        type: "SHIPYARD",
+        systemId: alphaCentauri.id,
+        xCoordinate: 11.4,
+        yCoordinate: 25.4,
+      },
+    });
+    await prisma.waypoint.create({
+      data: {
+        name: "Waypoint 5",
+        type: "ASTEROID",
+        systemId: alphaCentauri.id,
+        xCoordinate: 11.5,
+        yCoordinate: 25.5,
+      },
+    });
+
+    console.log("Systems and waypoints seeded successfully.");
   } catch (err) {
-    console.error("Error seeding systems:", err);
+    console.error("Error seeding systems and waypoints:", err);
   } finally {
     await prisma.$disconnect();
     process.exit(0);
